@@ -16,6 +16,8 @@ import com.contactmanager.repository.ContactRepository;
 
 public class ContactService {
 
+    private int totalAdds = 0;
+    private int totalDeletes = 0;
     private int totalSearches = 0;
     private Map<String, Integer> searchFrequency = new HashMap<>();
     private List<Contact> contacts;
@@ -39,6 +41,7 @@ public class ContactService {
             System.out.println("Duplicate phone number not allowed!");
             return;
         }
+        totalAdds++;
 
         Contact contact = new Contact(idCounter++, name, phone, email);
         contacts.add(contact);
@@ -180,8 +183,61 @@ public class ContactService {
             contacts.remove(toRemove);
             repository.save(contacts);
         }
-
+        totalDeletes++;
         return toRemove;
+    }
+
+    public void showDashboard() {
+
+        System.out.println("====== ANALYTICS DASHBOARD ======");
+
+        System.out.println("Total Contacts: " + contacts.size());
+        System.out.println("Total Adds: " + totalAdds);
+        System.out.println("Total Deletes: " + totalDeletes);
+        System.out.println("Total Searches: " + totalSearches);
+
+        // Most searched keyword
+        String mostUsed = null;
+        int max = 0;
+
+        for (String key : searchFrequency.keySet()) {
+            if (searchFrequency.get(key) > max) {
+                max = searchFrequency.get(key);
+                mostUsed = key;
+            }
+        }
+
+        if (mostUsed != null) {
+            System.out.println("Most Searched Keyword: " + mostUsed);
+        }
+
+        // Most common email domain
+        java.util.Map<String, Integer> domainCount = new java.util.HashMap<>();
+
+        for (Contact c : contacts) {
+            String email = c.getEmail();
+            if (email.contains("@")) {
+                String domain = email.substring(email.indexOf("@") + 1);
+                domainCount.put(domain,
+                        domainCount.getOrDefault(domain, 0) + 1);
+            }
+        }
+
+        String topDomain = null;
+        int maxDomain = 0;
+
+        for (String domain : domainCount.keySet()) {
+            if (domainCount.get(domain) > maxDomain) {
+                maxDomain = domainCount.get(domain);
+                topDomain = domain;
+            }
+        }
+
+        if (topDomain != null) {
+            System.out.println("Most Common Email Domain: " + topDomain);
+        }
+
+        System.out.println("=================================");
     }
 
     public List<Contact> search(String keyword) {

@@ -50,7 +50,8 @@ public class Main {
             System.out.println("6. Search");
             System.out.println("7. Import from CSV");
             System.out.println("8. Export to CSV");
-            System.out.println("9. Exit" + Colors.RESET);
+            System.out.println("9. Analytics Dashboard");
+            System.out.println("10. Exit" + Colors.RESET);
 
             System.out.print("Choose: ");
             int choice = sc.nextInt();
@@ -149,12 +150,18 @@ public class Main {
                         System.out.println("Access denied! Admin only.");
                         break;
                     }
-                    
+
                     service.exportToCSV("contacts.csv");
                     System.out.println(Colors.GREEN + "CSV Exported!" + Colors.RESET);
                     break;
-
                 case 9:
+                    if (role != Role.ADMIN) {
+                        System.out.println("Access denied! Admin only.");
+                        break;
+                    }
+                    service.showDashboard();
+                    break;
+                case 10:
                     System.out.println("Bye 👋");
                     return;
 
