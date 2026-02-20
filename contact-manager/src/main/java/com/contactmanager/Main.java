@@ -1,11 +1,13 @@
 package com.contactmanager;
-import com.contactmanager.utils.Colors;
-import com.contactmanager.utils.UndoRedoManager;
-import com.contactmanager.service.ContactService;
+
+import java.util.List;
+import java.util.Scanner;
+
 import com.contactmanager.model.Contact;
 import com.contactmanager.service.ContactService;
+import com.contactmanager.utils.Colors;
 import com.contactmanager.utils.PerformanceTracker;
-import java.util.Scanner;
+import com.contactmanager.utils.UndoRedoManager;
 
 public class Main {
 
@@ -25,7 +27,7 @@ public class Main {
         // 🧠 STEP 2: CREATE OBJECTS
         ContactService service = new ContactService();
         UndoRedoManager undoRedo = new UndoRedoManager();
-        
+
         // 🎨 STEP 8: MENU STARTS HERE
         while (true) {
 
@@ -97,10 +99,17 @@ public class Main {
                     break;
 
                 case 6:
-                    System.out.print("Search name: ");
+                    System.out.print("Search keyword: ");
                     String keyword = sc.nextLine();
-                    for (Contact c : service.search(keyword)) {
-                        System.out.println(c);
+
+                    List<Contact> results = service.smartSearch(keyword);
+
+                    if (results.isEmpty()) {
+                        System.out.println("No results found.");
+                    } else {
+                        for (Contact c : results) {
+                            System.out.println(c);
+                        }
                     }
                     break;
                 case 7:

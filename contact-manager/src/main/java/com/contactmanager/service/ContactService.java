@@ -5,13 +5,19 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.contactmanager.model.Contact;
+import com.contactmanager.model.SearchResult;
 import com.contactmanager.repository.ContactRepository;
 
 public class ContactService {
 
+    private int totalSearches = 0;
+    private Map<String, Integer> searchFrequency = new HashMap<>();
     private List<Contact> contacts;
     private ContactRepository repository;
     private int idCounter = 1;
@@ -97,6 +103,62 @@ public class ContactService {
 
         } catch (IOException e) {
             System.out.println("Error exporting CSV: " + e.getMessage());
+        }
+    }
+
+    public List<Contact> smartSearch(String keyword) {
+        totalSearches++;
+        searchFrequency.put(keyword,
+                searchFrequency.getOrDefault(keyword, 0) + 1);
+        keyword = keyword.toLowerCase();
+        List<SearchResult> results = new ArrayList<>();
+
+        for (Contact c : contacts) {
+
+            int score = 0;
+
+            // Highest priority → startsWith name
+            if (c.getName().toLowerCase().startsWith(keyword)) {
+                score += 100;
+            } // Medium priority → name contains
+            else if (c.getName().toLowerCase().contains(keyword)) {
+                score += 70;
+            }
+
+            // Email match
+            if (c.getEmail().toLowerCase().contains(keyword)) {
+                score += 50;
+            }
+
+            // Phone match
+            if (c.getPhone().contains(keyword)) {
+                score += 30;
+            }
+
+            if (score > 0) {
+                results.add(new SearchResult(c, score));
+            }
+        }
+
+        // Sort by score descending
+        results.sort(Comparator.comparingInt(SearchResult::getScore).reversed());
+
+        // Extract contacts only
+        List<Contact> finalResults = new ArrayList<>();
+        for (SearchResult r : results) {
+            finalResults.add(r.getContact());
+        }
+
+        return finalResults;
+    }
+
+    public void showSearchAnalytics() {
+
+        System.out.println("Total Searches: " + totalSearches);
+
+        System.out.println("Search Frequency:");
+        for (Map.Entry<String, Integer> entry : searchFrequency.entrySet()) {
+            System.out.println(entry.getKey() + " -> " + entry.getValue());
         }
     }
 
