@@ -17,6 +17,7 @@ import com.contactmanager.model.Contact;
 import com.contactmanager.service.ContactService;
 
 import jakarta.validation.Valid;
+
 @RestController
 
 @RequestMapping("/contacts")
