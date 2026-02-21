@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.contactmanager.model.Contact;
 import com.contactmanager.service.ContactService;
 
+import jakarta.validation.Valid;
 @RestController
 
 @RequestMapping("/contacts")
@@ -28,7 +29,7 @@ public class ContactController {
     }
 
     @PostMapping
-    public ResponseEntity<Contact> addContact(@RequestBody Contact contact) {
+    public ResponseEntity<Contact> addContact(@Valid @RequestBody Contact contact) {
         Contact saved = service.save(contact);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
