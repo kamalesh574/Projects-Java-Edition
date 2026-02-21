@@ -1,14 +1,15 @@
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-
+import { clearAuth } from "../../api/axios";
 const Navbar = () => {
   const { auth, setAuthState } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    setAuthState({ username: null, role: null });
-    navigate("/");
-  };
+  clearAuth();
+  setAuthState({ username: null, role: null });
+  navigate("/");
+};
 
   return (
     <header className="bg-slate-900 border-b border-slate-800 px-8 py-4 flex justify-between items-center">

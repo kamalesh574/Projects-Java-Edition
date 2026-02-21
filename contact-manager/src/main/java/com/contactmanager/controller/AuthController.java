@@ -13,15 +13,22 @@ public class AuthController {
     @GetMapping("/auth/me")
     public Map<String, Object> currentUser(Authentication authentication) {
 
+        if (authentication == null) {
+            throw new RuntimeException("User not authenticated");
+        }
+
         Map<String, Object> response = new HashMap<>();
 
         response.put("username", authentication.getName());
-        response.put("role", authentication.getAuthorities()
+
+        String role = authentication.getAuthorities()
                 .stream()
                 .findFirst()
-                .get()
-                .getAuthority()
-                .replace("ROLE_", ""));
+                .map(grantedAuthority ->
+                        grantedAuthority.getAuthority().replace("ROLE_", ""))
+                .orElse("UNKNOWN");
+
+        response.put("role", role);
 
         return response;
     }
