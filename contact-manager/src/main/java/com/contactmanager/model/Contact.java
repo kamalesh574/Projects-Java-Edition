@@ -1,9 +1,11 @@
 package com.contactmanager.model;
+import jakarta.persistence.*;
+@Entity
+@Table(name = "contacts")
 
-import java.io.Serializable;
-
-public class Contact implements Serializable {
-
+public class Contact  {
+     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String phone;
