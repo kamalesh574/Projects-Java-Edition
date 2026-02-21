@@ -26,3 +26,21 @@ Action:
 
 Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
 
+2026-02-21 08:15:14 INFO  com.contactmanager.ContactManagerApplication - Starting ContactManagerApplication using Java 21.0.7 with PID 3640 (C:\Users\kamalesh\Desktop\Projects-Java-Edition\contact-manager\target\classes started by kamalesh in C:\Users\kamalesh\Desktop\Projects-Java-Edition\contact-manager)
+2026-02-21 08:15:14 INFO  com.contactmanager.ContactManagerApplication - No active profile set, falling back to 1 default profile: "default"
+2026-02-21 08:15:15 INFO  org.springframework.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8081 (http)
+2026-02-21 08:15:15 INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2026-02-21 08:15:15 INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2026-02-21 08:15:15 INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.25]
+2026-02-21 08:15:15 INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-02-21 08:15:15 INFO  org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1008 ms
+2026-02-21 08:15:16 INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2026-02-21 08:15:16 INFO  org.springframework.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port 8081 (http) with context path '/'
+2026-02-21 08:15:16 INFO  com.contactmanager.ContactManagerApplication - Started ContactManagerApplication in 1.947 seconds (process running for 2.55)
+2026-02-21 08:16:53 INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-21 08:16:53 INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-02-21 08:16:53 INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2026-02-21 08:25:25 WARN  org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public java.lang.String com.contactmanager.controller.ContactController.addContact(com.contactmanager.model.Contact)]
+2026-02-21 08:34:35 WARN  org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public java.lang.String com.contactmanager.controller.ContactController.addContact(com.contactmanager.model.Contact)]
+2026-02-21 08:37:29 WARN  org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public java.lang.String com.contactmanager.controller.ContactController.addContact(com.contactmanager.model.Contact)]
+2026-02-21 08:37:58 INFO  com.contactmanager.service.ContactService - Contact added: Kamalesh
