@@ -29,21 +29,13 @@ public class ContactController {
 
     @PostMapping
     public ResponseEntity<Contact> addContact(@RequestBody Contact contact) {
-
-        Contact saved = service.addContact(
-                contact.getName(),
-                contact.getPhone(),
-                contact.getEmail()
-        );
-
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(saved);
+        Contact saved = service.save(contact);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
     @GetMapping
     public List<Contact> getAll() {
-        return service.getAllContacts();
+        return service.getAll();
     }
 
     @GetMapping("/search")
@@ -52,9 +44,8 @@ public class ContactController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable int id) {
-
-        service.deleteContact(id);
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        service.delete(id);
         return ResponseEntity.ok("Deleted successfully");
     }
 }

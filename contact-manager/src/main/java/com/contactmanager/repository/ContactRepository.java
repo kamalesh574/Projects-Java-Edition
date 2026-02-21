@@ -1,11 +1,12 @@
 package com.contactmanager.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import com.contactmanager.model.Contact;
-
 import java.util.List;
 
-public interface ContactRepository extends JpaRepository<Contact, Integer> {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.contactmanager.model.Contact;
+
+public interface ContactRepository extends JpaRepository<Contact, Long> {
 
     List<Contact> findByNameContainingIgnoreCase(String keyword);
 
