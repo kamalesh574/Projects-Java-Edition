@@ -2,6 +2,8 @@ package com.contactmanager.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,15 +26,19 @@ public class ContactController {
     public ContactController(ContactService service) {
         this.service = service;
     }
-    
+
     @PostMapping
-    public String addContact(@RequestBody Contact contact) {
-        service.addContact(
+    public ResponseEntity<Contact> addContact(@RequestBody Contact contact) {
+
+        Contact saved = service.addContact(
                 contact.getName(),
                 contact.getPhone(),
                 contact.getEmail()
         );
-        return "Contact added successfully";
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(saved);
     }
 
     @GetMapping
@@ -46,8 +52,9 @@ public class ContactController {
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable int id) {
+    public ResponseEntity<String> delete(@PathVariable int id) {
+
         service.deleteContact(id);
-        return "Deleted successfully";
+        return ResponseEntity.ok("Deleted successfully");
     }
 }

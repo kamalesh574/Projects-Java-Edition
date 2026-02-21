@@ -12,11 +12,12 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
+import com.contactmanager.exception.ContactNotFoundException;
 import com.contactmanager.model.Contact;
 import com.contactmanager.model.SearchResult;
 import com.contactmanager.repository.ContactRepository;
-import org.springframework.stereotype.Service;
 
 @Service
 public class ContactService {
@@ -43,16 +44,13 @@ public class ContactService {
     private static final Logger logger
             = LoggerFactory.getLogger(ContactService.class);
 
-    public void addContact(String name, String phone, String email) {
-        if (isDuplicatePhone(phone)) {
-            logger.warn("Duplicate phone number attempted: {}", phone);
-            return;
-        }
+    public Contact addContact(String name, String phone, String email) {
         Contact contact = new Contact(idCounter++, name, phone, email);
         contacts.add(contact);
         repository.save(contacts);
-        logger.info("Contact added: {}", name);
+        logger.info("Contact added: {}", contact);
         totalAdds++;
+        return contact;
     }
 
     public void importFromCSV(String fileName) {
@@ -180,22 +178,15 @@ public class ContactService {
     }
 
     public Contact deleteContact(int id) {
-        Contact toRemove = null;
 
-        for (Contact c : contacts) {
-            if (c.getId() == id) {
-                toRemove = c;
-                break;
-            }
-        }
+        Contact contact = contacts.stream()
+                .filter(c -> c.getId() == id)
+                .findFirst()
+                .orElseThrow(()
+                        -> new ContactNotFoundException("Contact with ID " + id + " not found"));
 
-        if (toRemove != null) {
-            contacts.remove(toRemove);
-            repository.save(contacts);
-        }
-        logger.info("Contact deleted with ID: {}", id);
-        totalDeletes++;
-        return toRemove;
+        contacts.remove(contact);
+        return contact;
     }
 
     public void showDashboard() {
