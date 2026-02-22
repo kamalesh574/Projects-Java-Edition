@@ -4,7 +4,7 @@ import { setAuth } from "../api/axios";
 interface AuthState {
   username: string | null;
   role: string | null;
-  token: string | null;
+  token?: string | null;
 }
 
 interface AuthContextType {
