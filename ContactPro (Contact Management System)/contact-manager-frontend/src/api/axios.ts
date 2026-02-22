@@ -1,9 +1,10 @@
 import axios from "axios";
 
 const api = axios.create({
-  const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
-});,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 // ✅ Set Basic Auth header
@@ -12,7 +13,7 @@ export const setAuth = (
   passwordOrToken: string,
   isToken = false
 ) => {
-  let encoded;
+  let encoded: string;
 
   if (isToken) {
     encoded = passwordOrToken;
