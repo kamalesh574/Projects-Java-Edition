@@ -5,8 +5,7 @@ import {
   FaAddressBook, 
   FaChartBar, 
   FaHistory, 
-  FaDatabase, 
-  FaCog 
+  
 } from "react-icons/fa";
 
 const Sidebar = () => {
