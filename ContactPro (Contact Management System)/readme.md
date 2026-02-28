@@ -367,8 +367,7 @@ Planned upgrades to elevate the system to enterprise-grade level:
 - **Undo Delete Functionality**  
   Temporary recovery system for accidental deletions.
 
-- **Dark / Light Theme Toggle**  
-  User-selectable UI theme preferences.
+
 
 - **Production Deployment**  
   - Backend → Railway / Render  
