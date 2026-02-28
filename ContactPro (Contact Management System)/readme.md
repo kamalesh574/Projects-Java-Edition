@@ -93,7 +93,6 @@ types/
 - Persistent login using localStorage
 - Axios-based API abstraction layer
 - Debounced search implementation
-- Drawer-based detail view
 - Confirmation modals
 - Chart-based analytics (Recharts)
 - Responsive dashboard layout
